@@ -1,3 +1,7 @@
+This repository is a fork of https://github.com/sqlcipher/sqlcipher which adapts SQLCipher for https://github.com/groue/GRDB.swift.
+
+---
+
 ## SQLCipher
 
 SQLCipher is an SQLite extension that provides transparent 256-bit AES encryption of 
