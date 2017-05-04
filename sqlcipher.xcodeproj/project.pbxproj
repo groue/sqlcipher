@@ -426,7 +426,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\n# https://github.com/groue/GRDB.swift/issues/41\nif [ \"$PLATFORM_NAME\" -eq \"macosx\" ]\nthen\nSDK_PLATFORM_NAME=\"macosx\"\nelse\nSDK_PLATFORM_NAME=\"iphonesimulator\"\nfi\n\nSDKROOT=\"$(xcrun --sdk $SDK_PLATFORM_NAME --show-sdk-path)\"\nCC=\"$(xcrun --sdk $SDK_PLATFORM_NAME -f clang)\"\nCXX=\"$(xcrun --sdk $SDK_PLATFORM_NAME -f clang++)\"\nCFLAGS=\"-isysroot $SDKROOT -DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=2\"\nCXXFLAGS=$CFLAGS\nexport CC CXX CFLAGS CXXFLAGS\n\n[ -e Makefile ] && make distclean\n./configure --enable-tempstore=yes --with-crypto-lib=commoncrypto\nmake sqlite3.c";
+			shellScript = "./configure --enable-tempstore=yes --with-crypto-lib=commoncrypto CFLAGS=\"-DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=2\"\nmake sqlite3.c\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
