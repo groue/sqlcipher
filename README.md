@@ -1,3 +1,7 @@
+This repository is a fork of https://github.com/sqlcipher/sqlcipher which adapts SQLCipher for https://github.com/groue/GRDB.swift.
+
+---
+
 ## SQLCipher
 
 SQLCipher extends the [SQLite](https://www.sqlite.org) database library to add security enhancements that make it more suitable for encrypted local data storage such as on-the-fly encryption, tamper evidence, and key derivation. Based on SQLite, SQLCipher closely tracks SQLite and periodically integrates stable SQLite release features.

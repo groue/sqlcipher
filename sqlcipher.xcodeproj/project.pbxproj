@@ -79,6 +79,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5671560F1CB115C8007DC145 /* sqlcipher.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = sqlcipher.xcconfig; sourceTree = "<group>"; };
 		4C0041981BFC382400ED2AD5 /* SQLCipher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SQLCipher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C0041A51BFC3A5000ED2AD5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4C0041A81BFC3A7E00ED2AD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = macosx/Info.plist; sourceTree = "<group>"; };
@@ -141,6 +142,7 @@
 		08FB7794FE84155DC02AAC07 /* sqlcipher */ = {
 			isa = PBXGroup;
 			children = (
+				5671560F1CB115C8007DC145 /* sqlcipher.xcconfig */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				4C0041A41BFC3A3800ED2AD5 /* Supporting Files */,
 				4C0041A71BFC3A5400ED2AD5 /* Frameworks */,
@@ -502,6 +504,7 @@
 /* Begin XCBuildConfiguration section */
 		1DEB91EC08733DB70010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5671560F1CB115C8007DC145 /* sqlcipher.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -511,19 +514,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)";
 				INSTALL_PATH = /usr/local/lib;
-				OTHER_CFLAGS = (
-					"-DSQLITE_HAS_CODEC",
-					"-DSQLITE_TEMP_STORE=2",
-					"-DSQLITE_THREADSAFE",
-					"-DSQLCIPHER_CRYPTO_CC",
-				);
-				"OTHER_CFLAGS[arch=armv6]" = (
-					"-mno-thumb",
-					"-DSQLITE_HAS_CODEC",
-					"-DSQLITE_TEMP_STORE=2",
-					"-DSQLITE_THREADSAFE",
-					"-DSQLCIPHER_CRYPTO_CC",
-				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = sqlcipher;
 			};
@@ -531,6 +521,7 @@
 		};
 		1DEB91ED08733DB70010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5671560F1CB115C8007DC145 /* sqlcipher.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -538,23 +529,6 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)";
 				INSTALL_PATH = /usr/local/lib;
-				OTHER_CFLAGS = (
-					"-DSQLITE_HAS_CODEC",
-					"-DNDEBUG",
-					"-DSQLITE_OS_UNIX=1",
-					"-DSQLITE_TEMP_STORE=2",
-					"-DSQLITE_THREADSAFE",
-					"-DSQLCIPHER_CRYPTO_CC",
-				);
-				"OTHER_CFLAGS[arch=armv6]" = (
-					"-mno-thumb",
-					"-DSQLITE_HAS_CODEC",
-					"-DNDEBUG",
-					"-DSQLITE_OS_UNIX=1",
-					"-DSQLITE_TEMP_STORE=2",
-					"-DSQLITE_THREADSAFE",
-					"-DSQLCIPHER_CRYPTO_CC",
-				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = sqlcipher;
 			};
@@ -580,8 +554,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				"IPHONEOS_DEPLOYMENT_TARGET[arch=arm64]" = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -608,8 +580,6 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				"IPHONEOS_DEPLOYMENT_TARGET[arch=arm64]" = 7.0;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator macosx iphoneos";
