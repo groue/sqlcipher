@@ -79,7 +79,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5671560F1CB115C8007DC145 /* sqlcipher.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = sqlcipher.xcconfig; sourceTree = "<group>"; };
 		4C0041981BFC382400ED2AD5 /* SQLCipher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SQLCipher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C0041A51BFC3A5000ED2AD5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4C0041A81BFC3A7E00ED2AD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = macosx/Info.plist; sourceTree = "<group>"; };
@@ -92,7 +91,8 @@
 		4C0041D61BFC3E2500ED2AD5 /* SQLCipher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SQLCipher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C0041E01BFC3F0800ED2AD5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		4C0041F91BFC46A600ED2AD5 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
-		9069D0A20FCE1A4D0042E34C /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
+		5671560F1CB115C8007DC145 /* sqlcipher.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = sqlcipher.xcconfig; sourceTree = "<group>"; };
+		9069D0A20FCE1A4D0042E34C /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = ../sqlite/sqlite3.c; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2AAC046055464E500DB518D /* libsqlcipher.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsqlcipher.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -426,7 +426,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./configure --enable-tempstore=yes --with-crypto-lib=commoncrypto CFLAGS=\"-DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=2\"\nmake sqlite3.c\nexit 0";
+			shellScript = "set -e\n\necho \"Configure and generate SQLite amalgamation files\"\n\npattern=\" |'\"\nif [[ ${PROJECT_DIR} =~ $pattern ]]\nthen\necho \"Unsafe PROJECT_DIR for make - contains spaces.\"\necho \"PROJECT_DIR=${PROJECT_DIR}\"\nexit 1\nfi\n\n# Ensure we always run configure/make as if we were compiling for macOS (as parts of the\n# configure/make process require building & running an executable)\n#\n# The generated sqlite3.c will be built for the correct platform by Xcode via the\n# 'sqlitecustom' target\nSDK_PLATFORM_NAME=\"macosx\"\nMACOSX_VERSION_MIN=\"$(sw_vers -productVersion | cut -d '.' -f 1,2)\"\n\n\nSDKROOT=\"$(xcrun --sdk $SDK_PLATFORM_NAME --show-sdk-path)\"\nCC=\"$(xcrun --sdk $SDK_PLATFORM_NAME -f clang)\"\nCXX=\"$(xcrun --sdk $SDK_PLATFORM_NAME -f clang++)\"\nCFLAGS=\"-DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=2 -arch x86_64 -isysroot $SDKROOT -mmacosx-version-min=$MACOSX_VERSION_MIN $OTHER_CFLAGS\"\nCXXFLAGS=$CFLAGS\nexport CC CXX CFLAGS CXXFLAGS\n\nmkdir -p \"${DERIVED_SOURCES_DIR}\"\ncd \"${DERIVED_SOURCES_DIR}\"\n\necho \"Clean-up previous files if necessary\"\n[ -e Makefile ] && make distclean\n\necho \"Configure makefile\"\n\"${PROJECT_DIR}/configure\" --srcdir=\"${PROJECT_DIR}/\" --enable-tempstore=yes --with-crypto-lib=commoncrypto\n\necho \"Make SQLite amalgamation\"\nmake sqlite3.c\n\n# copy generated amalgamation files (sqlite3.c and sqlite3.h)\n# to BUILD_DIR/sqlite\nSQLITE_OUTPUT_DIR=\"${BUILD_DIR}/sqlite\"\nmkdir -p \"${SQLITE_OUTPUT_DIR}\"\necho \"Copying sqlite3.c to ${SQLITE_OUTPUT_DIR}/sqlite3.c\"\ncp ./sqlite3.c \"${SQLITE_OUTPUT_DIR}/sqlite3.c\"\necho \"Copying sqlite3.h to ${PROJECT_DIR}/sqlite3.h\"\ncp ./sqlite3.h \"${PROJECT_DIR}/sqlite3.h\"\n\necho \"Finished generating SQLite amalgamation files\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
